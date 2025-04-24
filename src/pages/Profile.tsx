@@ -11,7 +11,6 @@ import {
   FaPaperPlane,
 } from "react-icons/fa";
 import {
-  BadgeCheck,
   MessageSquare,
   Share2,
   BookmarkPlus,
@@ -19,7 +18,6 @@ import {
   Users,
   Heart,
   Camera,
-  Award,
 } from "lucide-react";
 import Avatar from "../components/Avatar";
 import PostsGrid from "../components/PostsGrid";
@@ -49,12 +47,12 @@ const Profile = () => {
     },
     {
       name: "Likes",
-      count: profile?.likes_count,
+      count: 0,
       icon: <Heart className="w-4 h-4" />,
     },
     {
       name: "Media",
-      count: profile?.media_count,
+      count: 0,
       icon: <Camera className="w-4 h-4" />,
     },
   ];
@@ -152,11 +150,7 @@ const Profile = () => {
                   username={profile?.username}
                   className="ring-4 ring-white w-36 h-36 md:w-40 md:h-40"
                 />
-                {profile?.verified && (
-                  <div className="absolute -right-2 -bottom-2 bg-gradient-to-r from-indigo-500 to-pink-500 p-1 rounded-full">
-                    <BadgeCheck className="w-5 h-5 text-white" />
-                  </div>
-                )}
+
                 {isOwnProfile && (
                   <motion.div
                     whileHover={{ scale: 1.1 }}
@@ -174,11 +168,6 @@ const Profile = () => {
                       <h1 className="text-3xl font-black text-gray-900">
                         {profile?.username}
                       </h1>
-                      {profile?.premium && (
-                        <div className="inline-flex px-2 py-1 text-xs font-medium bg-gradient-to-r from-indigo-500 to-pink-500 text-white rounded-full">
-                          PRO
-                        </div>
-                      )}
                     </div>
                     {profile?.name && (
                       <p className="text-gray-600 font-medium">
@@ -221,20 +210,16 @@ const Profile = () => {
                 {/* Stats Summary */}
                 <div className="mt-6 inline-flex bg-gray-50 rounded-xl p-2 gap-2">
                   <div className="px-4 py-2 text-center">
-                    <div className="text-lg font-bold text-gray-900">
-                      {profile?.followers_count || 0}
-                    </div>
+                    <div className="text-lg font-bold text-gray-900">0</div>
                     <div className="text-xs text-gray-500">Followers</div>
                   </div>
                   <div className="px-4 py-2 text-center border-l border-r border-gray-200">
-                    <div className="text-lg font-bold text-gray-900">
-                      {profile?.following_count || 0}
-                    </div>
+                    <div className="text-lg font-bold text-gray-900">0</div>
                     <div className="text-xs text-gray-500">Following</div>
                   </div>
                   <div className="px-4 py-2 text-center">
                     <div className="text-lg font-bold text-gray-900">
-                      {profile?.posts_count || 0}
+                      {profile?.posts_count ?? 0}
                     </div>
                     <div className="text-xs text-gray-500">Posts</div>
                   </div>
@@ -361,15 +346,7 @@ const Profile = () => {
                         key={community.id}
                         whileHover={{ y: -4, transition: { duration: 0.2 } }}
                         className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all border border-gray-100 overflow-hidden">
-                        <div className="h-24 bg-gradient-to-r from-indigo-500 to-pink-500 relative">
-                          {community.cover_image_url && (
-                            <img
-                              src={community.cover_image_url}
-                              alt={community.name}
-                              className="w-full h-full object-cover"
-                            />
-                          )}
-                        </div>
+                        <div className="h-24 bg-gradient-to-r from-indigo-500 to-pink-500 relative" />
                         <div className="p-4">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-pink-400 flex items-center justify-center text-white font-bold">
@@ -379,9 +356,7 @@ const Profile = () => {
                               <h3 className="font-bold text-gray-800">
                                 {community.name}
                               </h3>
-                              <p className="text-xs text-gray-500">
-                                {community.members_count} members
-                              </p>
+                              <p className="text-xs text-gray-500">0 members</p>
                             </div>
                           </div>
                           {community.description && (
@@ -446,45 +421,6 @@ const Profile = () => {
             </TabPanels>
           </TabGroup>
         </motion.div>
-
-        {/* Achievements Section - New Feature */}
-        {profile?.achievements?.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white rounded-3xl shadow-lg shadow-indigo-100/30 p-6 mb-6 border border-white/50">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-gray-900 flex items-center">
-                <Award className="w-5 h-5 mr-2 text-indigo-500" />
-                Achievements
-              </h2>
-              <button className="text-sm text-indigo-600">View All</button>
-            </div>
-
-            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-              {(profile?.achievements || []).map((achievement, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                  className="min-w-[180px] bg-gradient-to-br from-indigo-50 to-pink-50 rounded-xl p-4 border border-indigo-100/40">
-                  <div className="w-12 h-12 mb-3 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 flex items-center justify-center">
-                    <Award className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="font-bold text-gray-800">
-                    {achievement.title}
-                  </h3>
-                  <p className="text-xs text-gray-600 mt-1">
-                    {achievement.description}
-                  </p>
-                  <div className="mt-2 text-xs text-indigo-600">
-                    {achievement.date}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
       </div>
     </div>
   );

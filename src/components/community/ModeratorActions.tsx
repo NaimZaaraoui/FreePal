@@ -39,6 +39,7 @@ export default function ModeratorActions({
     if (!reason.trim()) {
       showToast({
         type: "error",
+        title: "Error",
         message: "Please provide a reason for this action",
       });
       return;
