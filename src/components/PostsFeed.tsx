@@ -29,7 +29,7 @@ const PostsFeed = () => {
         onChange={setSelectedIndex}>
         <div className="relative mb-8">
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-pink-500 opacity-10 rounded-xl blur-lg"></div>
-          <TabList className="relative flex flex-wrap p-2 gap-2 bg-white/80 backdrop-blur-md rounded-xl shadow-xl border border-gray-100">
+          <TabList className="relative flex flex-col sm:flex-row p-2 gap-2 bg-white/80 backdrop-blur-md rounded-xl shadow-xl border border-gray-100">
             {feedOptions.map((option) => (
               <Tab
                 key={option.type}
